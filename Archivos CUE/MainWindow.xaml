@@ -1,0 +1,77 @@
+﻿<Window x:Class="Archivos_CUE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="531" Width="715" Background="#FF158303" ResizeMode="CanMinimize">
+    <Grid>
+        <Label Content="Ingrese los datos del álbum" Margin="10,10,0,0" VerticalAlignment="Top" Height="45" Background="White" FontSize="26" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="689"/>
+        <Label Content="Título*:" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txtTítulo" HorizontalAlignment="Left" Height="29" Margin="80,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontSize="16"/>
+        <Label Content="Artista*:" HorizontalAlignment="Left" Margin="310,65,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txtArtista" HorizontalAlignment="Left" Height="29" Margin="379,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="233" FontSize="16"/>
+        <Label Content="Género:" HorizontalAlignment="Left" Margin="10,99,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txtGenero" HorizontalAlignment="Left" Height="29" Margin="80,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontSize="16"/>
+        <Label Content="Año:" HorizontalAlignment="Left" Margin="310,99,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="txtAño" HorizontalAlignment="Left" Height="29" Margin="379,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" FontSize="16" HorizontalContentAlignment="Right" MaxLength="4" KeyDown="txtAño_KeyDown"/>
+        <Button x:Name="btnAgregar" Content="Agregar Pista" HorizontalAlignment="Left" Margin="10,157,0,0" VerticalAlignment="Top" Width="118" FontSize="16" Click="btnAgregar_Click"/>
+        <Button x:Name="btnArchivo" Content="Asignar archivo de audio" HorizontalAlignment="Left" Margin="151,157,0,0" VerticalAlignment="Top" Width="202" FontSize="16" Click="btnArchivo_Click" />
+        <Button x:Name="btnMostrar" Content="Mostrar Info. de Pista" HorizontalAlignment="Left" Margin="382,157,0,0" VerticalAlignment="Top" Width="165" FontSize="16" Click="btnMostrar_Click"/>
+        <Button x:Name="btnEliminar" Content="Eliminar Pista" HorizontalAlignment="Left" Margin="573,157,0,0" VerticalAlignment="Top" Width="111" FontSize="16" Click="btnEliminar_Click"/>
+        <DataGrid x:Name="dtgDatos" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserAddRows="False" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Height="249" Width="689">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="N° Pista" Binding="{Binding NumPista}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Título Pista">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Titulo}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Titulo}" x:Name="txtTitulo" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Artista">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Artista}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Artista}" x:Name="txtArtista" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Índice 00">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Indice00}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Indice00}" x:Name="txtI00" KeyDown="SoloNums" MaxLength="8"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Índice 01">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Indice01}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Indice01}" x:Name="txtI01" KeyDown="SoloNums" MaxLength="8" LostFocus="txtI01_LostFocus"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Nombre de Archivo" Binding="{Binding NomArch}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnGuardar" Content="Guardar" HorizontalAlignment="Left" Margin="10,466,0,0" VerticalAlignment="Top" Width="94" FontSize="16" Click="btnGuardar_Click" />
+        <Button x:Name="btnLimpiar" Content="Limpiar" HorizontalAlignment="Left" Margin="310,466,0,0" VerticalAlignment="Top" Width="94" FontSize="16" Click="btnLimpiar_Click"/>
+
+    </Grid>
+</Window>
