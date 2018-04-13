@@ -16,10 +16,10 @@
         <Button x:Name="btnArchivo" Content="Asignar archivo de audio" HorizontalAlignment="Left" Margin="151,157,0,0" VerticalAlignment="Top" Width="202" FontSize="16" Click="btnArchivo_Click" />
         <Button x:Name="btnMostrar" Content="Mostrar Info. de Pista" HorizontalAlignment="Left" Margin="382,157,0,0" VerticalAlignment="Top" Width="165" FontSize="16" Click="btnMostrar_Click"/>
         <Button x:Name="btnEliminar" Content="Eliminar Pista" HorizontalAlignment="Left" Margin="573,157,0,0" VerticalAlignment="Top" Width="111" FontSize="16" Click="btnEliminar_Click"/>
-        <DataGrid x:Name="dtgDatos" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserAddRows="False" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Height="249" Width="689">
+        <DataGrid x:Name="dtgDatos" AutoGenerateColumns="False" ItemsSource="{Binding origen}" CanUserAddRows="False" Margin="10,198,10,0" VerticalAlignment="Top" Height="249">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="N° Pista" Binding="{Binding NumPista}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="Título Pista">
+                <DataGridTemplateColumn Header="Título Pista" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Titulo}" />
@@ -31,7 +31,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Artista">
+                <DataGridTemplateColumn Header="Artista" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Artista}" />
@@ -51,7 +51,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox Text="{Binding Indice00}" x:Name="txtI00" KeyDown="SoloNums" MaxLength="8"  />
+                            <TextBox Text="{Binding Indice00}" x:Name="txtI00" KeyDown="SoloNums" MaxLength="8" LostFocus="txtI00_LostFocus"  />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
@@ -67,11 +67,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Nombre de Archivo" Binding="{Binding NomArch}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nombre de Archivo" Binding="{Binding NomArch}" IsReadOnly="True" Width="220"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnGuardar" Content="Guardar" HorizontalAlignment="Left" Margin="10,466,0,0" VerticalAlignment="Top" Width="94" FontSize="16" Click="btnGuardar_Click" />
         <Button x:Name="btnLimpiar" Content="Limpiar" HorizontalAlignment="Left" Margin="310,466,0,0" VerticalAlignment="Top" Width="94" FontSize="16" Click="btnLimpiar_Click"/>
+        <Button x:Name="btnSalir" Content="Salir" HorizontalAlignment="Left" Margin="590,466,0,0" VerticalAlignment="Top" Width="94" FontSize="16" Click="btnSalir_Click" />
 
     </Grid>
 </Window>

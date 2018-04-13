@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace Archivos_CUE
 {
@@ -60,7 +61,7 @@ namespace Archivos_CUE
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
         {
-            if(dtgDatos.SelectedIndex<0)
+            if(dtgDatos.SelectedIndex < 0)
                 MessageBox.Show("Seleccione una pista, por favor.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
@@ -265,11 +266,49 @@ namespace Archivos_CUE
 
         private void txtI01_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!Regex.IsMatch(origen[dtgDatos.SelectedIndex].Indice01, @"^(\d{2}:\d{2}:\d{2})$"))
+            var texto = sender as TextBox;
+            string[] partes = texto.Text.Split(':');
+            try
             {
-
+                int segundos = int.Parse(partes[1]), frames = int.Parse(partes[2]);
+                bool coincide = Regex.IsMatch(texto.Text, @"^(\d{2}:\d{2}:\d{2})$"), segs = segundos > 59, frm = frames > 75;
+                if (!coincide || (coincide && (segs || frm)))
+                {
+                    throw new PistaException(dtgDatos.SelectedIndex + 1, 2);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        private void btnSalir_Click(object sender, RoutedEventArgs e)
+        {
+            
+            this.Close();
+        }
+
+        private void txtI00_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var texto = sender as TextBox;
+            if (texto.Text != string.Empty)
+            {
+                string[] partes = texto.Text.Split(':');
+                try
+                {
+                    int segundos = int.Parse(partes[1]), frames = int.Parse(partes[2]);
+                    bool coincide = Regex.IsMatch(texto.Text, @"^(\d{2}:\d{2}:\d{2})$"), segs = segundos > 59, frm = frames > 75;
+                    if (!coincide || (coincide && (segs || frm)))
+                    {
+                        throw new PistaException(dtgDatos.SelectedIndex + 1, 1);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
     }
 }

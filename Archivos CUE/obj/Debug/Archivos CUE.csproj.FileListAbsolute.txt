@@ -1,0 +1,13 @@
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\bin\Debug\Archivos CUE.exe.config
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\bin\Debug\Archivos CUE.exe
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\bin\Debug\Archivos CUE.pdb
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos CUE.csprojResolveAssemblyReference.cache
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\MainWindow.baml
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\MainWindow.g.cs
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\App.g.cs
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos CUE_MarkupCompile.cache
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos CUE.g.resources
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos_CUE.Properties.Resources.resources
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos CUE.csproj.GenerateResource.Cache
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos CUE.exe
+C:\Users\Manuel\Source\Repos\Archivos-CUE\Archivos CUE\obj\Debug\Archivos CUE.pdb
