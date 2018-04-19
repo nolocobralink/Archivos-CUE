@@ -33,4 +33,8 @@ El usuario primero abre el programa, y procede a ingresar el título del álbum,
 
 Comparación con la nueva versión:
 
-Una de las grandes diferencias entre la nueva versión y la primera es la interfaz gráfica. Si bien se mantiene los textboxs para el título, artista, género y año del álbum, no existe un ingreso de cantidad de pistas, y los campos "Género" y "Año" pasan a ser opcionales.
+Una de las grandes diferencias entre la nueva versión y la primera es la interfaz gráfica. Si bien se mantiene los textboxs para el título, artista, género y año del álbum, no existe un ingreso de cantidad de pistas, y los campos "Género" y "Año" pasan a ser opcionales. Los textboxs con la información de la pista ahora son columnas de una tabla DataGrid, con el número de la pista como la primera columna. El nombre del archivo es el último campo, y solo se puede modificar al seleccionar el archivo fuente con el cuadro de diálogo correspondiente. Si se elimina una pista, se adaptan los números de pista. También existe una comprobación de formato de índices (INDEX) al ingresarlos. Cuando el usuario haya ingresado toda la información necesaria, el programa guarda el archivo fuente forzando el formato ANSI, incluso cuando se ingresan tildes o letras foráneas.
+
+
+Historial de versiones oficiales:
+
