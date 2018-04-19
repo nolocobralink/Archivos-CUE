@@ -33,3 +33,4 @@ El usuario primero abre el programa, y procede a ingresar el título del álbum,
 
 Comparación con la nueva versión:
 
+Una de las grandes diferencias entre la nueva versión y la primera es la interfaz gráfica. Si bien se mantiene los textboxs para el título, artista, género y año del álbum, no existe un ingreso de cantidad de pistas, y los campos "Género" y "Año" pasan a ser opcionales.
