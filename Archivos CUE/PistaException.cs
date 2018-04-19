@@ -7,7 +7,7 @@ namespace Archivos_CUE
 {
     class PistaException : Exception
     {
-        public PistaException(int numpista, int coderr)
+        public PistaException(int numpista, PistaExceptions.Exceptions coderr)
             : base(string.Format("Error en la pista {0}.\nError número {1}: {2}", numpista, coderr, PistaExceptions.Errores(coderr,numpista)))
         {
             
@@ -24,11 +24,21 @@ namespace Archivos_CUE
                                             "Introduzca un título para la pista {0}.",
                                             "Introduzca el artista para la pista {0}."};
 
-        public static string Errores(int coderr, int numpista)
+        public static string Errores(Exceptions coderr, int numpista)
         {
-            if (coderr == 4 || coderr == 5)
-                return string.Format(errores[coderr], numpista, numpista + 1);
-            return string.Format(errores[coderr], numpista);
+            switch(coderr)
+            {
+                case Exceptions.I01PMayor:
+                case Exceptions.I01PIgual:
+                    return string.Format(errores[(int)coderr], numpista, numpista + 1);
+                default:
+                    return string.Format(errores[(int)coderr], numpista);
+            }
+        }
+
+        public static enum Exceptions
+        {
+            I00Error = 1, I01Error, I00PMayor, I01PMayor, I01PIgual, Titulo, Artista
         }
     }
 }
