@@ -36,7 +36,7 @@ namespace Archivos_CUE
             }
         }
 
-        public static enum Exceptions
+        public enum Exceptions
         {
             I00Error = 1, I01Error, I00PMayor, I01PMayor, I01PIgual, Titulo, Artista
         }
