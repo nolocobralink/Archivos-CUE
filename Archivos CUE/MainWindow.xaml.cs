@@ -68,8 +68,7 @@ namespace Archivos_CUE
                 origen.RemoveAt(dtgDatos.SelectedIndex);
                 for(int i=0; i < origen.Count; i++)
                 {
-                    if (origen[i].NumPista != i + 1)
-                        origen[i].NumPista = i + 1;
+                    origen[i].NumPista = i + 1;
                 }
                 dtgDatos.Items.Refresh();
                 nump = origen.Count;
@@ -115,6 +114,8 @@ namespace Archivos_CUE
                 ComprobarIndices(origen);
                 ComprobarTiempoEntrePistas(origen);
                 ComprobarNombres(origen);
+                PrimeraPistaNomArch();
+                NombresArchivosVacios();
                 SaveFileDialog dlg = new SaveFileDialog();
                 dlg.Filter = "Archivo CUE (*.cue)|*.cue";
                 dlg.Title = "Busque la carpeta donde se encuentre el/los archivos de audio, y asígnele un nombre al archivo CUE.";
@@ -139,11 +140,8 @@ namespace Archivos_CUE
                     sw.WriteLine("    INDEX 01 " + origen[0].Indice01);
                     for (int i = 1; i < origen.Count; i++)
                     {
-                        if (origen[i].NomArch != string.Empty)
-                        {
-                            archf = origen[i].NomArch;
-                            sw.WriteLine("FILE \"" + archf + "\" WAVE");
-                        }
+                        if (origen[i].NomArch != origen[i - 1].NomArch)
+                            sw.WriteLine("FILE \"" + origen[i].NomArch + "\" WAVE");
                         sw.WriteLine(string.Format("  TRACK {0} AUDIO",(i+1).ToString("0#")));
                         sw.WriteLine("    TITLE \"" + origen[i].Titulo + "\"");
                         sw.WriteLine("    PERFORMER \"" + origen[i].Artista + "\"");
@@ -169,9 +167,9 @@ namespace Archivos_CUE
             for (int i = 0; i < datos.Count; i++)
             {
                 if (datos[i].Titulo == string.Empty)
-                    throw new PistaException(i + 1, 6);
+                    throw new PistaException(i + 1, PistaExceptions.Exceptions.Titulo);
                 if (datos[i].Artista == string.Empty)
-                    throw new PistaException(i + 1, 7);
+                    throw new PistaException(i + 1, PistaExceptions.Exceptions.Artista);
             }
         }
 
@@ -193,11 +191,11 @@ namespace Archivos_CUE
                 uint tn1 = n1[0] * 60 * 75 + n1[1] * 75 + n1[2], tn2 = n2[0] * 60 * 75 + n2[1] * 75 + n2[2];
                 if(tn1 > tn2)
                 {
-                    throw new PistaException(i + 1, 4);
+                    throw new PistaException(i + 1, PistaExceptions.Exceptions.I01PMayor);
                 }
                 else if (tn1 == tn2)
                 {
-                    throw new PistaException(i + 1, 5);
+                    throw new PistaException(i + 1, PistaExceptions.Exceptions.I01PIgual);
                 }
             }
         }
@@ -212,7 +210,7 @@ namespace Archivos_CUE
                     uint[] i0 = { uint.Parse(stri0[0]), uint.Parse(stri0[1]), uint.Parse(stri0[2]) }, i1 = { uint.Parse(stri1[0]), uint.Parse(stri1[1]), uint.Parse(stri1[2]) };
                     uint ti0 = i0[0] * 60 * 75 + i0[1] * 75 + i0[2], ti1 = i1[0] * 60 * 75 + i1[1] * 75 + i1[2];
                     if (ti0 >= ti1)
-                        throw new PistaException(i + 1, 3);
+                        throw new PistaException(i + 1, PistaExceptions.Exceptions.I00PMayor);
                 }
             }
         }
@@ -227,7 +225,7 @@ namespace Archivos_CUE
                     uint[] times = { uint.Parse(strtimes[0]), uint.Parse(strtimes[1]), uint.Parse(strtimes[2]) };
                     if (times[0] >= 80 || times[1] >= 60 || times[2] >= 75)
                     {
-                        throw new PistaException(i + 1, 1);
+                        throw new PistaException(i + 1, PistaExceptions.Exceptions.I00Error);
                     }
                 }
             }
@@ -237,7 +235,7 @@ namespace Archivos_CUE
                 uint[] times = { uint.Parse(strtimes[0]), uint.Parse(strtimes[1]), uint.Parse(strtimes[2]) };
                 if (times[0] >= 80 || times[1] >= 60 || times[2] >= 75)
                 {
-                    throw new PistaException(i + 1, 2);
+                    throw new PistaException(i + 1, PistaExceptions.Exceptions.I01Error);
                 }
 
             }
@@ -274,7 +272,7 @@ namespace Archivos_CUE
                 bool coincide = Regex.IsMatch(texto.Text, @"^(\d{2}:\d{2}:\d{2})$"), segs = segundos > 59, frm = frames > 75;
                 if (!coincide || (coincide && (segs || frm)))
                 {
-                    throw new PistaException(dtgDatos.SelectedIndex + 1, 2);
+                    throw new PistaException(dtgDatos.SelectedIndex + 1, PistaExceptions.Exceptions.I01Error);
                 }
             }
             catch (Exception ex)
@@ -285,7 +283,6 @@ namespace Archivos_CUE
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
-            
             this.Close();
         }
 
@@ -301,13 +298,59 @@ namespace Archivos_CUE
                     bool coincide = Regex.IsMatch(texto.Text, @"^(\d{2}:\d{2}:\d{2})$"), segs = segundos > 59, frm = frames > 75;
                     if (!coincide || (coincide && (segs || frm)))
                     {
-                        throw new PistaException(dtgDatos.SelectedIndex + 1, 1);
+                        throw new PistaException(dtgDatos.SelectedIndex + 1, PistaExceptions.Exceptions.I00Error);
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("¿Está seguro que desea salir? Cualquier cambio no guardado se perderá.", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void btnActualizar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PrimeraPistaNomArch();
+                string nomarch = origen[0].NomArch;
+                for (int i = 1; i < origen.Count; i++)
+                {
+                    if (nomarch != origen[i].NomArch)
+                        if (origen[i].NomArch == string.Empty)
+                            origen[i].NomArch = nomarch;
+                        else
+                            nomarch = origen[i].NomArch;
+                }
+                dtgDatos.Items.Refresh();
+                MessageBox.Show("Nombres de archivos actualizados en todas las pistas.", "Pistas cambiadas.", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void PrimeraPistaNomArch()
+        {
+            if (origen[0].NomArch == string.Empty)
+                throw new Exception("Asignele un archivo fuente a la primera pista.");
+        }
+
+        private void NombresArchivosVacios()
+        {
+            for (int i = 1; i < origen.Count; i++)
+            {
+                if (origen[i].NomArch == string.Empty)
+                    throw new Exception("Existen pistas sin archivos fuentes asociados.\nQuizás olvidó asignar esos archivos o quizás olvidó actualizar las pistas.\nPara actualizar las pistas, haga clic en el botón \"Actualizar\" y pruebe a guardar de nuevo.");
             }
         }
     }
